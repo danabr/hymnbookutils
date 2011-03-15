@@ -4,7 +4,7 @@ if ARGV.size > 0
   files = ARGV
   $stderr.puts "Found #{files.size} files matching the pattern."
   files.each do |f|
-    f = File.basename(f)
+    f = File.basename(f, File.extname(f))
     names = f.gsub(/\.[a-z]+$/, '').split("_")
     names.each do |name|
       if name =~ /^(\d+)([a-z]*)$/i
