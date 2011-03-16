@@ -7,7 +7,7 @@ if ARGV.size > 0
     f = File.basename(f, File.extname(f))
     names = f.gsub(/\.[a-z]+$/, '').split("_")
     names.each do |name|
-      if name =~ /^(\d+)([a-z]*)$/i
+      if name =~ /^(\d+)(\w*)$/i
         num, id = $1, $2
         num.gsub!(/^0+/, '')
         id = id.empty? ? "A" : id.capitalize
