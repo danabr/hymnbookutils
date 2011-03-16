@@ -18,11 +18,11 @@ object HymnbookEditor {
       //Parse commands
       val commands = 
       for(line <- lines) yield {
-        val parts = noWhitespace(line.split(":"))
+        val parts = noWhitespace(splitFirst(line, ":"))
         val range_parts = noWhitespace(parts(0).split("-"))
         val min = Integer.parseInt(range_parts(0))
         val max = Integer.parseInt(range_parts(1))
-        val command_parts = noWhitespace(parts(1).split("="))
+        val command_parts = noWhitespace(splitFirst(parts(1), "="))
         val element = command_parts(0)
         val value = if(command_parts(1)(0) == '<')
             XML.loadString(command_parts(1)).child
@@ -50,6 +50,14 @@ object HymnbookEditor {
       outFile.close
       System.err.println("Done!")
     }
+  }
+  
+  /*
+    Splits the string into two at the first detected separator.
+  */
+  def splitFirst(str:String, sep:String) : Array[String] = { 
+    val parts = str.split(sep)
+    Array(parts(0), parts.drop(1).mkString(sep))
   }
 
   def copyOrChange(iter : Seq[Node], commands : Array[(Int, Int, String, Seq[Node])]) =
